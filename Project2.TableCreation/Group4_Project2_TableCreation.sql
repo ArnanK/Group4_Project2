@@ -78,7 +78,14 @@ GO
 DROP TABLE IF EXISTS [CH01-01-Dimension].[DimProductCategory];
 CREATE TABLE [CH01-01-Dimension].[DimProductCategory]
 (
-
+	ProductCategoryKey int NOT NULL,
+	ProductCategory varchar(20) NULL,
+	UserAuthorizationKey int NOT NULL,
+	DateAdded datetime2(7) NULL
+		CONSTRAINT DFT_DimProductCategory_DateAdded DEFAULT(SYSDATETIME()),
+	DateofLastUpdate datetime2(7) NULL
+		CONSTRAINT DFT_DimProductCategory_DateofLastUpdate DEFAULT(SYSDATETIME()),
+	CONSTRAINT PK_DimProductCategory Primary Key(ProductCategoryKey)
 )
 
 GO
@@ -95,7 +102,17 @@ GO
 DROP TABLE IF EXISTS [CH01-01-Dimension].[DimProductSubcategory];
 CREATE TABLE [CH01-01-Dimension].[DimProductSubcategory]
 (
-
+	ProductSubcategoryKey int NOT NULL,
+	ProductCategoryKey int NOT NULL,
+	ProductSubcategory varchar(20) NULL,
+	UserAuthorizationKey int NOT NULL,
+	DateAdded datetime2(7) NULL
+		CONSTRAINT DFT_DimProductSubcategory_DateAdded DEFAULT(SYSDATETIME()),
+	DateofLastUpdate datetime2(7) NULL
+		CONSTRAINT DFT_DimProductSubcategory_DateofLastUpdate DEFAULT(SYSDATETIME()),
+	CONSTRAINT PK_DimProductSubcategory Primary Key(ProductSubcategoryKey),
+	CONSTRAINT FK_DimProductSubcategory Foreign Key(ProductCategoryKey)
+		REFERENCES [CH01-01-Dimension].[DimProductCategory](ProductCategoryKey)
 )
 
 
