@@ -18,7 +18,7 @@ GO
 DROP TABLE IF EXISTS Process.WorkflowSteps;
 CREATE TABLE Process.WorkflowSteps
 (
-	WorkFlowStepKey int NOT NULL,
+	WorkFlowStepKey int NOT NULL IDENTITY(1,1),
 	WorkFlowStepDescription nvarchar(100) NOT NULL,
 	WorkFlowStepTableRowCount int NULL
 		CONSTRAINT DFT_WorkflowSteps_WorkFlowStepTableRowCount DEFAULT(0),
@@ -50,7 +50,7 @@ GO
 DROP TABLE IF EXISTS DbSecurity.UserAuthorization;
 CREATE TABLE DbSecurity.UserAuthorization
 (
-	UserAuthorizationKey int NOT NULL,
+	UserAuthorizationKey int NOT NULL IDENTITY(1,1),
 	ClassTime char(5) NULL
 		CONSTRAINT DFT_WorkflowSteps_ClassTime DEFAULT('09:15'),
 	IndividualProject nvarchar(100) NULL
@@ -114,7 +114,3 @@ CREATE TABLE [CH01-01-Dimension].[DimProductSubcategory]
 	CONSTRAINT FK_DimProductSubcategory Foreign Key(ProductCategoryKey)
 		REFERENCES [CH01-01-Dimension].[DimProductCategory](ProductCategoryKey)
 )
-
-
-
-
