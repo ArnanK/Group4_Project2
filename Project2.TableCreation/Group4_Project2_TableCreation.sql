@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS Process.WorkflowSteps;
 CREATE TABLE Process.WorkflowSteps
 (
 	WorkFlowStepKey int NOT NULL IDENTITY(1,1),
+	UserAuthorizationKey int NOT NULL,
 	WorkFlowStepDescription nvarchar(100) NOT NULL,
 	WorkFlowStepTableRowCount int NULL
 		CONSTRAINT DFT_WorkflowSteps_WorkFlowStepTableRowCount DEFAULT(0),
@@ -28,8 +29,11 @@ CREATE TABLE Process.WorkflowSteps
 		CONSTRAINT DFT_WorkflowSteps_EndingDateTime DEFAULT(SYSDATETIME()),
 	ClassTime char(5) NULL
 		CONSTRAINT DFT_WorkflowSteps_ClassTime DEFAULT('09:15'),
-	CONSTRAINT PK_Workflowsteps Primary Key(WorkFlowStepKey)
+	CONSTRAINT PK_Workflowsteps Primary Key(WorkFlowStepKey),
+	CONSTRAINT FK_UserAuthorizationKey Foreign Key(UserAuthorizationKey)
+		REFERENCES DbSecurity.UserAuthorization(UserAuthorizationKey)
 );
+
 
 GO
 SET ANSI_NULLS ON
@@ -114,3 +118,19 @@ CREATE TABLE [CH01-01-Dimension].[DimProductSubcategory]
 	CONSTRAINT FK_DimProductSubcategory Foreign Key(ProductCategoryKey)
 		REFERENCES [CH01-01-Dimension].[DimProductCategory](ProductCategoryKey)
 )
+
+ALTER TABLE [CH01-01-Dimension].[DimProduct]
+ADD [UserAuthorizationKey] [int] NOT NULL;
+go
+ALTER TABLE [CH01-01-Dimension].[DimProduct]
+ADD [DateAdded] [datetime2](7) NOT NULL;
+go
+ALTER TABLE [CH01-01-Dimension].[DimProduct]
+ADD CONSTRAINT [DF_DimProduct_DateAdded] default(sysdatetime()) for [DateAdded]
+go
+ALTER TABLE [CH01-01-Dimension].[DimProduct]
+ADD [DateOfLastUpdate] [datetime2](7) NOT NULL;
+go
+ALTER TABLE [CH01-01-Dimension].[DimProduct] 
+ADD CONSTRAINT [DF_DimProduct_DateOfLastUpdated] default(sysdatetime()) for [DateOfLastUpdate]
+go

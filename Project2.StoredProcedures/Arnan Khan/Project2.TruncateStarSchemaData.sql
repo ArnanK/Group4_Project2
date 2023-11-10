@@ -31,6 +31,8 @@ BEGIN
 	truncate table [CH01-01-Dimension].DimTerritory
 	truncate table [CH01-01-Dimension].DimSalesManagers
 
+	ALTER SEQUENCE [PKSequence].[DimProductSequenceObject] RESTART WITH 1;
+
 	
 END;
 	
