@@ -11,20 +11,36 @@ GO
 -- Description:	Drop the Foreign Keys From the Star Schema
 -- =============================================
 ALTER PROCEDURE [Project2].[DropForeignKeysFromStarSchemaData]
+	@GroupMemberUserAuthorizationKey INT
 AS
 BEGIN
+	declare @startT DATETIME2;
+	declare @endT DATETIME2;
     SET NOCOUNT ON;
 	--Remove the Foreign Keys for the [CH01-01-Fact]
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimCustomer;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimGender;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimMartialStatus;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimOccupation;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimOrderDate;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimProduct;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimTerritory;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT FK_Data_DimSalesManager;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimCustomer;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimGender;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimMartialStatus;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimOccupation;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimOrderDate;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimProduct;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimTerritory;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimSalesManager;
 
-	ALTER TABLE [CH01-01-Dimension].[DimProductSubcategory] DROP CONSTRAINT FK_DimProductSubcategory;
+	ALTER TABLE [CH01-01-Dimension].[DimProduct] DROP CONSTRAINT IF EXISTS [Foreign_DimProduct_DimProductSubcategory]
+	ALTER TABLE [CH01-01-Dimension].[DimProductSubcategory] DROP  CONSTRAINT IF EXISTS FK_DimProductSubcategory;
 	
+	declare @rowCount as INT;
+	set @rowCount = 0;
+	set @startT = SYSDATETIME();
+	set @endT = SYSDATETIME();
+
+	EXEC [Process].[usp_TrackWorkFlow]
+		@UserAuthorization = @GroupMemberUserAuthorizationKey,
+		@WorkFlowDescription = N'Drops All Foreign Key Constraints For All Tables',
+		@startTime = @startT,
+		@endTime = @endT,
+		@WorkFlowStepTableRowCount = @rowCount;
+
 
 END;

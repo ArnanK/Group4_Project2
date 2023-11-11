@@ -134,3 +134,6 @@ go
 ALTER TABLE [CH01-01-Dimension].[DimProduct] 
 ADD CONSTRAINT [DF_DimProduct_DateOfLastUpdated] default(sysdatetime()) for [DateOfLastUpdate]
 go
+ALTER TABLE [CH01-01-Dimension].[DimProduct] 
+ADD CONSTRAINT FK_DimProduct Foreign Key(ProductSubcategoryKey)
+REFERENCES [CH01-01-Dimension].[DimProductSubcategory](ProductSubcategoryKey)

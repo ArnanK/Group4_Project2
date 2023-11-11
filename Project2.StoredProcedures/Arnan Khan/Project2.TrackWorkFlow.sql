@@ -1,10 +1,17 @@
+USE [BIClass]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 -- ===========================================================
 -- Author: Arnan Khan
 -- Procedure: [Process].[usp_TrackWorkFlow]
 -- Create date: 11/10/2023
 -- Description:	Allows you to track Work Flow Proceudres as a parametirzed table.
 -- ===========================================================
-CREATE PROCEDURE [Process].[usp_TrackWorkFlows]
+
+ALTER PROCEDURE [Process].[usp_TrackWorkFlows]
     @UserAuthorizationKey INT,
     @WorkFlowStepDescription NVARCHAR(100),
     @StartTime DATETIME2,
