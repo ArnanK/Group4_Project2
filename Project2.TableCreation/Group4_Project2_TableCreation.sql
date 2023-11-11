@@ -1,4 +1,36 @@
 USE [BIClass]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author: Arnan Khan
+-- Table: DbSecurity.UserAuthorization
+-- Create date: 11/05/2023
+-- Description: User GroupMember info for enhanced security.
+-- =============================================
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'DbSecurity')
+BEGIN
+    EXEC('CREATE SCHEMA DbSecurity')
+END
+GO
+DROP TABLE IF EXISTS DbSecurity.UserAuthorization;
+CREATE TABLE DbSecurity.UserAuthorization
+(
+	UserAuthorizationKey int NOT NULL,
+	ClassTime char(5) NULL
+		CONSTRAINT DFT_WorkflowSteps_ClassTime DEFAULT('09:15'),
+	IndividualProject nvarchar(100) NULL
+		CONSTRAINT DFT_UserAuthorization_IndividualProject DEFAULT('PROJECT 2 RECREATE THE BICLASS DATABASE STAR SCHEMA'),
+	DateAdded datetime2(7) NULL
+		CONSTRAINT DFT_UserAuthorization_DateAdded DEFAULT(SYSDATETIME()),
+	GroupMemberLastName nvarchar(35) NOT NULL,
+	GroupMemberFirstName nvarchar(25) NOT NULL,
+	GroupName nvarchar(20) NOT NULL,
+	CONSTRAINT PK_UserAuthorization Primary Key(UserAuthorizationKey)
+);
 GO
 SET ANSI_NULLS ON
 GO
@@ -32,39 +64,6 @@ CREATE TABLE Process.WorkflowSteps
 	CONSTRAINT PK_Workflowsteps Primary Key(WorkFlowStepKey),
 	CONSTRAINT FK_UserAuthorizationKey Foreign Key(UserAuthorizationKey)
 		REFERENCES DbSecurity.UserAuthorization(UserAuthorizationKey)
-);
-
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Author: Arnan Khan
--- Table: DbSecurity.UserAuthorization
--- Create date: 11/05/2023
--- Description: User GroupMember info for enhanced security.
--- =============================================
-IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'DbSecurity')
-BEGIN
-    EXEC('CREATE SCHEMA DbSecurity')
-END
-GO
-DROP TABLE IF EXISTS DbSecurity.UserAuthorization;
-CREATE TABLE DbSecurity.UserAuthorization
-(
-	UserAuthorizationKey int NOT NULL IDENTITY(1,1),
-	ClassTime char(5) NULL
-		CONSTRAINT DFT_WorkflowSteps_ClassTime DEFAULT('09:15'),
-	IndividualProject nvarchar(100) NULL
-		CONSTRAINT DFT_UserAuthorization_IndividualProject DEFAULT('PROJECT 2 RECREATE THE BICLASS DATABASE STAR SCHEMA'),
-	DateAdded datetime2(7) NULL
-		CONSTRAINT DFT_UserAuthorization_DateAdded DEFAULT(SYSDATETIME()),
-	GroupMemberLastName nvarchar(35) NOT NULL,
-	GroupMemberFirstName nvarchar(25) NOT NULL,
-	GroupName nvarchar(20) NOT NULL,
-	CONSTRAINT PK_UserAuthorization Primary Key(UserAuthorizationKey)
 );
 
 

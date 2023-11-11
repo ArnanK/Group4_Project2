@@ -3,6 +3,10 @@
 -- Create date: 11/05/2023
 -- Description: Sequence objects for DimProduct, DimProductCategory, DimProductSubcategory
 -- =============================================
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'PKSequence')
+BEGIN
+    EXEC('CREATE SCHEMA PKSequence')
+END
 CREATE SEQUENCE 
 [PKSequence].[DimProductSequenceObject]
 	AS [int]
@@ -12,18 +16,4 @@ CREATE SEQUENCE
 	MAXVALUE 2147483647
 	CACHE
 GO
-USE BIClass
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD [UserAuthorizationKey] [int] NOT NULL;
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD [DateAdded] [datetime2](7) NOT NULL;
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD CONSTRAINT [DF_DimProduct_DateAdded] default(sysdatetime()) for [DateAdded]
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD [DateOfLastUpdate] [datetime2](7) NOT NULL;
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct] 
-ADD CONSTRAINT [DF_DimProduct_DateOfLastUpdated] default(sysdatetime()) for [DateOfLastUpdate]
+

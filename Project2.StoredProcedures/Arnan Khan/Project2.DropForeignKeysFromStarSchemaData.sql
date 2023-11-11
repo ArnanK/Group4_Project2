@@ -27,8 +27,9 @@ BEGIN
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimTerritory;
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimSalesManager;
 
-	ALTER TABLE [CH01-01-Dimension].[DimProduct] DROP CONSTRAINT IF EXISTS [Foreign_DimProduct_DimProductSubcategory]
-	ALTER TABLE [CH01-01-Dimension].[DimProductSubcategory] DROP  CONSTRAINT IF EXISTS FK_DimProductSubcategory;
+	ALTER TABLE [CH01-01-Dimension].[DimProduct] DROP CONSTRAINT IF EXISTS FK_DimProduct;
+    ALTER TABLE [CH01-01-Dimension].[DimProductSubCategory] DROP CONSTRAINT IF EXISTS FK_DimProductSubcategory;
+	ALTER TABLE [CH01-01-Dimension].[DimProductCategory] DROP CONSTRAINT IF EXISTS FK_DimProductCategory
 	
 	declare @rowCount as INT;
 	set @rowCount = 0;
