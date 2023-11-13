@@ -90,6 +90,8 @@ CREATE TABLE [CH01-01-Dimension].[DimProductCategory]
 		CONSTRAINT DFT_DimProductCategory_DateofLastUpdate DEFAULT(SYSDATETIME()),
 	CONSTRAINT PK_DimProductCategory Primary Key(ProductCategoryKey)
 )
+ALTER TABLE [CH01-01-Dimension].[DimProductCategory] ADD  CONSTRAINT [DF_DimProductCategory_ProductCategoryKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[DimProductCategorySequenceObject]) FOR [ProductCategoryKey]
+GO
 
 GO
 SET ANSI_NULLS ON
@@ -114,25 +116,104 @@ CREATE TABLE [CH01-01-Dimension].[DimProductSubcategory]
 	DateofLastUpdate datetime2(7) NULL
 		CONSTRAINT DFT_DimProductSubcategory_DateofLastUpdate DEFAULT(SYSDATETIME()),
 	CONSTRAINT PK_DimProductSubcategory Primary Key(ProductSubcategoryKey),
-	CONSTRAINT FK_DimProductSubcategory Foreign Key(ProductCategoryKey)
+	CONSTRAINT FK_DimProductCategory Foreign Key(ProductCategoryKey)
 		REFERENCES [CH01-01-Dimension].[DimProductCategory](ProductCategoryKey)
 )
+ALTER TABLE [CH01-01-Dimension].[DimProductSubcategory] ADD  CONSTRAINT [DF_DimProductSubcategory_ProductSubcategoryKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[DimProductSubcategorySequenceObject]) FOR [ProductSubcategoryKey]
+GO
 
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD [UserAuthorizationKey] [int] NOT NULL;
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD [DateAdded] [datetime2](7) NOT NULL;
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD CONSTRAINT [DF_DimProduct_DateAdded] default(sysdatetime()) for [DateAdded]
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct]
-ADD [DateOfLastUpdate] [datetime2](7) NOT NULL;
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct] 
-ADD CONSTRAINT [DF_DimProduct_DateOfLastUpdated] default(sysdatetime()) for [DateOfLastUpdate]
-go
-ALTER TABLE [CH01-01-Dimension].[DimProduct] 
-ADD CONSTRAINT FK_DimProduct Foreign Key(ProductSubcategoryKey)
-REFERENCES [CH01-01-Dimension].[DimProductSubcategory](ProductSubcategoryKey)
+
+--Alter DimProductTable (Script)
+/****** Object:  Table [CH01-01-Dimension].[DimProduct]    Script Date: 11/11/2023 2:40:30 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+DROP TABLE IF EXISTS [CH01-01-Dimension].[DimProduct];
+CREATE TABLE [CH01-01-Dimension].[DimProduct](
+	[ProductKey] [int] NOT NULL,
+	[ProductSubcategoryKey] [int] NULL,
+	[ProductCategory] [varchar](20) NULL,
+	[ProductSubcategory] [varchar](20) NULL,
+	[ProductCode] [varchar](10) NULL,
+	[ProductName] [varchar](40) NULL,
+	[Color] [varchar](10) NULL,
+	[ModelName] [varchar](30) NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_DimProduct] PRIMARY KEY CLUSTERED 
+(
+	[ProductKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimProduct] ADD  CONSTRAINT [DF_DimProduct_DateAdded]  DEFAULT (sysdatetime()) FOR [DateAdded]
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimProduct] ADD  CONSTRAINT [DF_DimProduct_DateOfLastUpdated]  DEFAULT (sysdatetime()) FOR [DateOfLastUpdate]
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimProduct] ADD  CONSTRAINT [DF_DimProduct_ProductKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[DimProductSequenceObject]) FOR [ProductKey]
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimProduct]  WITH CHECK ADD  CONSTRAINT [FK_DimProductSubcategory] FOREIGN KEY([ProductSubcategoryKey])
+REFERENCES [CH01-01-Dimension].[DimProductSubcategory] ([ProductSubcategoryKey])
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimProduct] CHECK CONSTRAINT [FK_DimProductSubcategory]
+GO
+
+
+
+USE [BIClass]
+GO
+
+/****** Object:  Table [CH01-01-Fact].[Data]    Script Date: 11/12/2023 7:21:54 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Fact].[Data](
+	[SalesKey] [int] NOT NULL,
+	[SalesManagerKey] [int] NULL,
+	[OccupationKey] [int] NULL,
+	[TerritoryKey] [int] NULL,
+	[ProductKey] [int] NULL,
+	[CustomerKey] [int] NULL,
+	[ProductCategory] [varchar](20) NULL,
+	[SalesManager] [varchar](20) NULL,
+	[ProductSubcategory] [varchar](20) NULL,
+	[ProductCode] [varchar](10) NULL,
+	[ProductName] [varchar](40) NULL,
+	[Color] [varchar](10) NULL,
+	[ModelName] [varchar](30) NULL,
+	[OrderQuantity] [int] NULL,
+	[UnitPrice] [money] NULL,
+	[ProductStandardCost] [money] NULL,
+	[SalesAmount] [money] NULL,
+	[OrderDate] [date] NULL,
+	[MonthName] [varchar](10) NULL,
+	[MonthNumber] [int] NULL,
+	[Year] [int] NULL,
+	[CustomerName] [varchar](30) NULL,
+	[MaritalStatus] [char](1) NULL,
+	[Gender] [char](1) NULL,
+	[Education] [varchar](20) NULL,
+	[Occupation] [varchar](20) NULL,
+	[TerritoryRegion] [varchar](20) NULL,
+	[TerritoryCountry] [varchar](20) NULL,
+	[TerritoryGroup] [varchar](20) NULL,
+ CONSTRAINT [PK_Data] PRIMARY KEY CLUSTERED 
+(
+	[SalesKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+

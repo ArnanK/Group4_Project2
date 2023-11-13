@@ -24,14 +24,14 @@ BEGIN
 	truncate table [CH01-01-FACT].Data
 	truncate table [CH01-01-Dimension].DimCustomer
 	truncate table [CH01-01-Dimension].DimGender
-	truncate table [CH01-01-Dimension].DimMartialStatus
+	truncate table [CH01-01-Dimension].DimMaritalStatus
 	truncate table [CH01-01-Dimension].DimOccupation
 	truncate table [CH01-01-Dimension].DimOrderDate
 	truncate table [CH01-01-Dimension].DimProduct
 	truncate table [CH01-01-Dimension].DimProductCategory
 	truncate table [CH01-01-Dimension].DimProductSubcategory
 	truncate table [CH01-01-Dimension].DimTerritory
-	truncate table [CH01-01-Dimension].DimSalesManagers
+	truncate table [CH01-01-Dimension].SalesManagers
 
 	ALTER SEQUENCE [PKSequence].[DataSequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimCustomerSequenceObject] RESTART WITH 1;
@@ -50,12 +50,14 @@ BEGIN
 	set @startT = SYSDATETIME();
 	set @endT = SYSDATETIME();
 
-	EXEC [Process].[usp_TrackWorkFlow]
-		@UserAuthorization = @GroupMemberUserAuthorizationKey,
-		@WorkFlowDescription = N'Truncates all Tables and alters Sequence Objects to 1.',
-		@startTime = @startT,
-		@endTime = @endT,
-		@WorkFlowStepTableRowCount = @rowCount;
+	INSERT INTO Process.WorkflowSteps (UserAuthorizationKey, WorkFlowStepDescription, StartingDateTime, EndingDateTime, WorkFlowStepTableRowCount)
+	VALUES(
+		@GroupMemberUserAuthorizationKey,
+		N'Loads all of the Products.',
+		@startT,
+		 @endT,
+		@rowCount
+	)
 
 	
 END;

@@ -20,28 +20,30 @@ BEGIN
 	--Remove the Foreign Keys for the [CH01-01-Fact]
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimCustomer;
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimGender;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimMartialStatus;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimMaritalStatus;
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimOccupation;
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimOrderDate;
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimProduct;
 	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimTerritory;
-	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_DimSalesManager;
+	ALTER TABLE [CH01-01-Fact].[Data] DROP CONSTRAINT IF EXISTS FK_Data_SalesManager;
 
-	ALTER TABLE [CH01-01-Dimension].[DimProduct] DROP CONSTRAINT IF EXISTS FK_DimProduct;
-    ALTER TABLE [CH01-01-Dimension].[DimProductSubCategory] DROP CONSTRAINT IF EXISTS FK_DimProductSubcategory;
-	ALTER TABLE [CH01-01-Dimension].[DimProductCategory] DROP CONSTRAINT IF EXISTS FK_DimProductCategory
+	ALTER TABLE [CH01-01-Dimension].[DimProduct] DROP CONSTRAINT IF EXISTS FK_DimProductSubcategory;
+    ALTER TABLE [CH01-01-Dimension].[DimProductSubCategory] DROP CONSTRAINT IF EXISTS FK_DimProductCategory;
+	
 	
 	declare @rowCount as INT;
 	set @rowCount = 0;
 	set @startT = SYSDATETIME();
 	set @endT = SYSDATETIME();
 
-	EXEC [Process].[usp_TrackWorkFlow]
-		@UserAuthorization = @GroupMemberUserAuthorizationKey,
-		@WorkFlowDescription = N'Drops All Foreign Key Constraints For All Tables',
-		@startTime = @startT,
-		@endTime = @endT,
-		@WorkFlowStepTableRowCount = @rowCount;
+	INSERT INTO Process.WorkflowSteps (UserAuthorizationKey, WorkFlowStepDescription, StartingDateTime, EndingDateTime, WorkFlowStepTableRowCount)
+	VALUES(
+		@GroupMemberUserAuthorizationKey,
+		N'Loads all of the Products.',
+		@startT,
+		 @endT,
+		@rowCount
+	)
 
 
 END;
