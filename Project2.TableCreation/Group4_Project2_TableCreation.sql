@@ -164,11 +164,76 @@ REFERENCES [CH01-01-Dimension].[DimProductSubcategory] ([ProductSubcategoryKey])
 GO
 
 ALTER TABLE [CH01-01-Dimension].[DimProduct] CHECK CONSTRAINT [FK_DimProductSubcategory]
+
+-- =============================================
+-- Author: Akash
+-- Table: 
+-- Create date: 11/06/2023
+-- Description: 
+-- =============================================
+GO
+
+/****** Object:  Table [CH01-01-Dimension].[DimOrderDate]    Script Date: 11/12/2023 7:38:22 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Dimension].[DimOrderDate](
+	[OrderDate] [date] NOT NULL,
+	[MonthName] [varchar](10) NULL,
+	[MonthNumber] [int] NULL,
+	[Year] [int] NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_DimOrderDate] PRIMARY KEY CLUSTERED 
+(
+	[OrderDate] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [CH01-01-Dimension].[DimOrderDate] ADD  CONSTRAINT [DF_DimOrderDate_DateAdded]  DEFAULT (sysdatetime()) FOR [DateAdded]
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimOrderDate] ADD  CONSTRAINT [DF_DimOrderDate_DateOfLastUpdated]  DEFAULT (sysdatetime()) FOR [DateOfLastUpdate]
+GO
+
+/****** Object:  Table [CH01-01-Dimension].[DimTerritory]    Script Date: 11/12/2023 7:54:08 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Dimension].[DimTerritory](
+	[TerritoryKey] [int] NOT NULL,
+	[TerritoryGroup] [varchar](20) NULL,
+	[TerritoryCountry] [varchar](20) NULL,
+	[TerritoryRegion] [varchar](20) NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_DimTerritory] PRIMARY KEY CLUSTERED 
+(
+	[TerritoryKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [CH01-01-Dimension].[DimTerritory] ADD  CONSTRAINT [DF_DimTerritory_DateAdded]  DEFAULT (sysdatetime()) FOR [DateAdded]
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimTerritory] ADD  CONSTRAINT [DF_DimTerritory_DateOfLastUpdated]  DEFAULT (sysdatetime()) FOR [DateOfLastUpdate]
+GO
+
+ALTER TABLE [CH01-01-Dimension].[DimTerritory] ADD  CONSTRAINT [DF_DimTerritory_TerritoryKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[DimTerritorySequenceObject]) FOR [TerritoryKey]
 GO
 
 
 
-USE [BIClass]
+GO
+
 GO
 
 /****** Object:  Table [CH01-01-Fact].[Data]    Script Date: 11/12/2023 7:21:54 PM ******/

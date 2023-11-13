@@ -39,7 +39,20 @@ CREATE SEQUENCE
 	MAXVALUE 2147483647
 	CACHE
 GO
-
+-- =============================================
+-- Author: Akash
+-- Create date: 11/05/2023
+-- Description: Sequence objects for Territory
+-- =============================================
+CREATE SEQUENCE 
+[PKSequence].[DimTerritorySequenceObject]
+	AS [int]
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	CACHE
+GO
 
 CREATE SEQUENCE 
 [PKSequence].[DimCustomerSequenceObject]
