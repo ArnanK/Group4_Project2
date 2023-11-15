@@ -43,7 +43,7 @@ BEGIN
 	ALTER SEQUENCE [PKSequence].[DimProductCategorySequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimProductSubcategorySequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimTerritorySequenceObject] RESTART WITH 1;
-	ALTER SEQUENCE [PKSequence].[DimSalesManagersSequenceObject] RESTART WITH 1;
+	ALTER SEQUENCE [PKSequence].[SalesManagersSequenceObject] RESTART WITH 1;
 	
 	declare @rowCount as INT;
 	set @rowCount = 0;

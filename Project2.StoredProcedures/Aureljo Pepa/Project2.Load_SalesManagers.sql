@@ -1,5 +1,13 @@
+USE [BIClass]
+GO
+/****** Object:  StoredProcedure [Project2].[Load_SalesManagers]    Script Date: 11/10/2023 10:08:59 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
 ALTER PROCEDURE [Project2].[Load_SalesManagers]
-@GroupMemberAuthorizationKey INT 
+@GroupMemberUserAuthorizationKey INT 
 AS 
 BEGIN
    SET NOCOUNT ON;
@@ -9,24 +17,17 @@ BEGIN
    DECLARE @endT DATETIME2;
    DECLARE @DateOfLastUpdate DATETIME2;
    SET @DateOfLastUpdate = SYSDATETIME();
+
    INSERT INTO [CH01-01-Dimension].SalesManagers
    (
-		SalesManagerKey,
 		Category,
 		SalesManager,
 		Office,
-		UserAuthorizationKey, 
-		DateAdded, 
+		UserAuthorizationKey,
+		DateAdded,
 		DateOfLastUpdate
 	)
 	SELECT DISTINCT 
-		CASE 
-			WHEN OLD.SalesManager LIKE 'Marco%' THEN 1
-			WHEN OLD.SalesManager LIKE 'Maurizio%' THEN 2
-			WHEN OLD.SalesManager LIKE 'Alberto%' THEN 3
-			WHEN OLD.SalesManager LIKE 'Luis%' THEN 4
-			ELSE 5 -- For other cases
-		END AS SalesManagerKey,
 		OLD.ProductCategory,
 		OLD.SalesManager,
 		Office = CASE 
@@ -39,7 +40,6 @@ BEGIN
 	  @DateAdded,
 	  @DateOfLastUpdate
 	FROM FileUpload.OriginallyLoadedData AS OLD 
-	ORDER BY SalesManagerKey;
 
 	declare @rowCount as INT;
     set @rowCount = (SELECT COUNT(*) FROM [CH01-01-Dimension].[DimOccupation])
@@ -55,3 +55,7 @@ BEGIN
         @rowCount
     )
 END;
+
+
+SELECT *
+FROM [CH01-01-Dimension].SalesManagers

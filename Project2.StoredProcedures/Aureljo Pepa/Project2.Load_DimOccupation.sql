@@ -9,16 +9,8 @@ BEGIN
    DECLARE @endT DATETIME2;
    DECLARE @DateOfLastUpdate DATETIME2;
    SET @DateOfLastUpdate = SYSDATETIME();
-   INSERT INTO [CH01-01-Dimension].[DimOccupation] (OccupationKey, Occupation, UserAuthorizationKey, DateAdded, DateOfLastUpdate)
+   INSERT INTO [CH01-01-Dimension].[DimOccupation] ( Occupation, UserAuthorizationKey, DateAdded, DateOfLastUpdate)
    SELECT DISTINCT
-      CASE 
-         WHEN OLD.Occupation = 'clerical' THEN 1
-         WHEN OLD.Occupation = 'management' THEN 2
-         WHEN OLD.Occupation = 'manual' THEN 3
-         WHEN OLD.Occupation = 'professional' THEN 4
-         WHEN OLD.Occupation = 'skilled manual' THEN 5
-         ELSE NULL -- You may want to handle other cases accordingly
-      END AS OccupationKey,
       OLD.Occupation,
 	  @GroupMemberUserAuthorizationKey, 
 	  @DateAdded,
