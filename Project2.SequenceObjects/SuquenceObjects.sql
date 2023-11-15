@@ -83,7 +83,7 @@ GO
 
 CREATE SEQUENCE
 [PKSequence].[Data]
-	AS	[int]
+	AS[int]
 	START WITH 1
 	INCREMENT BY 1
 	MINVALUE 1
