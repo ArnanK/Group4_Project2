@@ -64,5 +64,32 @@ CREATE SEQUENCE
 	CACHE
 GO
 
+-- =============================================
+-- Author: Mudabir Rizvi
+-- Create date: 11/12/2023
+-- Description: Sequence objects for DimCustomer,Data
+-- =============================================
+
+CREATE SEQUENCE
+[PKSequence.[DimCustomer]
+	AS [int]
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	CACHE
+GO
+
+
+CREATE SEQUENCE
+[PKSequence].[Data]
+	AS	[int]
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	CACHE
+GO
+
 
 
