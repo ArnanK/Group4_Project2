@@ -165,12 +165,7 @@ GO
 
 ALTER TABLE [CH01-01-Dimension].[DimProduct] CHECK CONSTRAINT [FK_DimProductSubcategory]
 
--- =============================================
--- Author: Akash
--- Table: 
--- Create date: 11/06/2023
--- Description: 
--- =============================================
+
 GO
 
 /****** Object:  Table [CH01-01-Dimension].[DimOrderDate]    Script Date: 11/12/2023 7:38:22 PM ******/
@@ -232,10 +227,6 @@ GO
 
 
 
-GO
-
-GO
-
 /****** Object:  Table [CH01-01-Fact].[Data]    Script Date: 11/12/2023 7:21:54 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -273,12 +264,135 @@ CREATE TABLE [CH01-01-Fact].[Data](
 	[TerritoryRegion] [varchar](20) NULL,
 	[TerritoryCountry] [varchar](20) NULL,
 	[TerritoryGroup] [varchar](20) NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
  CONSTRAINT [PK_Data] PRIMARY KEY CLUSTERED 
 (
 	[SalesKey] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+ALTER TABLE [CH01-01-Fact].[Data] ADD  CONSTRAINT [DF_Data_SalesKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[DataSequenceObject]) FOR [SalesKey]
+GO
 
+
+USE [BIClass]
+GO
+
+/****** Object:  Table [CH01-01-Dimension].[DimCustomer]    Script Date: 11/15/2023 12:12:05 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Dimension].[DimCustomer](
+	[CustomerKey] [int] NOT NULL,
+	[CustomerName] [varchar](30) NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK__DimCusto__95011E6452BCF41C] PRIMARY KEY CLUSTERED 
+(
+	[CustomerKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [CH01-01-Dimension].[DimCustomer] ADD  CONSTRAINT [DF_DimCustomer_CustomerKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[DimCustomerSequenceObject]) FOR [CustomerKey]
+GO
+
+
+-----------------------------------------------------------------------------------------------------------
+/****** Object:  Table [CH01-01-Dimension].[DimGender]    Script Date: 11/15/2023 12:17:48 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Dimension].[DimGender](
+	[Gender] [char](1) NOT NULL,
+	[GenderDescription] [varchar](6) NOT NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_DimGender] PRIMARY KEY CLUSTERED 
+(
+	[Gender] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [CH01-01-Dimension].[DimMaritalStatus]    Script Date: 11/15/2023 12:20:17 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Dimension].[DimMaritalStatus](
+	[MaritalStatus] [char](1) NOT NULL,
+	[MaritalStatusDescription] [varchar](7) NOT NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_DimMaritalStatus] PRIMARY KEY CLUSTERED 
+(
+	[MaritalStatus] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [CH01-01-Dimension].[DimOccupation]    Script Date: 11/15/2023 12:22:38 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Dimension].[DimOccupation](
+	[OccupationKey] [int] NOT NULL,
+	[Occupation] [varchar](20) NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_DimOccupation] PRIMARY KEY CLUSTERED 
+(
+	[OccupationKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [CH01-01-Dimension].[DimOccupation] ADD  CONSTRAINT [DF_DimOccupation_OccupationKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[DimOccupationSequenceObject]) FOR [OccupationKey]
+GO
+
+/****** Object:  Table [CH01-01-Dimension].[SalesManagers]    Script Date: 11/15/2023 12:31:53 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [CH01-01-Dimension].[SalesManagers](
+	[SalesManagerKey] [int] NOT NULL,
+	[Category] [varchar](20) NULL,
+	[SalesManager] [varchar](50) NULL,
+	[Office] [varchar](50) NULL,
+	[UserAuthorizationKey] [int] NOT NULL,
+	[DateAdded] [datetime2](7) NOT NULL,
+	[DateOfLastUpdate] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_SalesManagers] PRIMARY KEY CLUSTERED 
+(
+	[SalesManagerKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [CH01-01-Dimension].[SalesManagers] ADD  CONSTRAINT [DF_SalesManagers_SalesManagerKey]  DEFAULT (NEXT VALUE FOR [PKSequence].[SalesManagersSequenceObject]) FOR [SalesManagerKey]
+GO
+
+
+
+
+	
 
 

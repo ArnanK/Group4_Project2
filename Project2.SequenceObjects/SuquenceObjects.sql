@@ -79,7 +79,7 @@ CREATE SEQUENCE
 GO
 
 CREATE SEQUENCE 
-[PKSequence].[DimMaritialStatusObject]
+[PKSequence].[DimMaritialStatusSequenceObject]
 	AS [int]
 	START WITH 1
 	INCREMENT BY 1
@@ -92,9 +92,8 @@ GO
 -- Create date: 11/12/2023
 -- Description: Sequence objects for DimCustomer,Data
 -- =============================================
-
 CREATE SEQUENCE
-[PKSequence.[DimCustomer]
+[PKSequence].[DimCustomerSequenceObject]
 	AS [int]
 	START WITH 1
 	INCREMENT BY 1
@@ -105,7 +104,7 @@ GO
 
 
 CREATE SEQUENCE
-[PKSequence].[Data]
+[PKSequence].[DataSequenceObject]
 	AS[int]
 	START WITH 1
 	INCREMENT BY 1
@@ -114,4 +113,33 @@ CREATE SEQUENCE
 	CACHE
 GO
 
+-- =============================================
+-- Author: Aureljo Pepa
+-- Create date: 11/13/2023
+-- Description: Sales Manager Sequence Object
+-- =============================================
+CREATE SEQUENCE
+[PKSequence].[SalesManagersSequenceObject]
+	AS[int]
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	CACHE
+GO
+
+-- =============================================
+-- Author: 
+-- Create date: 11/13/2023
+-- Description: DimOccupation Sequence Object
+-- =============================================
+CREATE SEQUENCE
+[PKSequence].[DimOccupationSequenceObject]
+	AS[int]
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	CACHE
+GO
 

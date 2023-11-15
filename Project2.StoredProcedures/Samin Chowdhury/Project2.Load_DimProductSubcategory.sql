@@ -56,7 +56,7 @@ BEGIN
 
 	INSERT INTO Process.WorkflowSteps (UserAuthorizationKey, WorkFlowStepDescription, StartingDateTime, EndingDateTime, WorkFlowStepTableRowCount)
 	VALUES(
-		2,
+		@GroupMemberUserAuthorizationKey,
 		N'Loads all of the Product Categories.',
 		@startT,
 		 @endT,
