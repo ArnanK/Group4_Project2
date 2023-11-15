@@ -63,6 +63,28 @@ CREATE SEQUENCE
 	MAXVALUE 2147483647
 	CACHE
 GO
+-- =============================================
+-- Author: Abdul Mohammed
+-- Create date: 11/05/2023
+-- Description: Sequence Objects for DimGender, DimMaritialStatusObject
+-- =============================================
+CREATE SEQUENCE 
+[PKSequence].[DimGenderSequenceObject]
+	AS [int]
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	CACHE
+GO
 
-
+CREATE SEQUENCE 
+[PKSequence].[DimMaritialStatusObject]
+	AS [int]
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	CACHE
+GO
 
