@@ -65,4 +65,4 @@ END
 
 GO
 
-select * from [CH01-01-Dimension].[DimCustomer]
+
