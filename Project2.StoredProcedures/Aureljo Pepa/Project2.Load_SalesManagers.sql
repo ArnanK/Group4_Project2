@@ -1,5 +1,10 @@
 USE [BIClass]
 GO
+-- =============================================
+-- Author:		Aureljo Pepa
+-- Create date: 11/14/2023
+-- Description:	
+-- =============================================
 /****** Object:  StoredProcedure [Project2].[Load_SalesManagers]    Script Date: 11/10/2023 10:08:59 PM ******/
 SET ANSI_NULLS ON
 GO

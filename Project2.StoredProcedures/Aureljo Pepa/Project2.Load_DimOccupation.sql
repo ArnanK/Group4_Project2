@@ -1,3 +1,8 @@
+-- =============================================
+-- Author:		Aureljo Pepa
+-- Create date: 11/14/2023
+-- Description:	
+-- =============================================
 ALTER PROCEDURE [Project2].[Load_DimOccupation]
 @GroupMemberUserAuthorizationKey INT
 AS

@@ -26,7 +26,7 @@ BEGIN
 
 	INSERT INTO [CH01-01-Fact].[Data]
 	(
-		CustomerKey,
+		
 		ProductCategory,
 		SalesManager,
 		ProductSubcategory,
@@ -53,9 +53,10 @@ BEGIN
 	)
 	SELECT
 		DISTINCT 
-		old.CustomerKey,
+		
 		old.ProductCategory,
 		old.SalesManager,
+		old.ProductSubcategory,
 		old.ProductCode,
 		old.ProductName,
 		old.Color,
@@ -72,16 +73,16 @@ BEGIN
 		old.Occupation,
 		old.TerritoryRegion,
 		old.TerritoryCountry,
-		old.TerritoryGroup
+		old.TerritoryGroup,
 		@GroupMemberUserAuthorizationKey,
 		@DateAdded,
 		@DateOfLastUpdate
-	FROM FileUpload.OriginallyLoadedData as OLD
-	Order BY SalesKey asc
+	FROM FileUpload.OriginallyLoadedData as old
+	
 
 
 	declare @rowCount as INT;
-	set @rowCount = (SELECT COUNT(*) FROM [CH01-01-Dimension].[DimOrderDate]);
+	set @rowCount = (SELECT COUNT(*) FROM [CH01-01-Fact].[Data]);
 	set @startT = SYSDATETIME();
 	set @endT = SYSDATETIME();
 
