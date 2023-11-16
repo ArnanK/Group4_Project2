@@ -44,6 +44,4 @@ BEGIN
 		 @endT,
 		@rowCount
 	)
-
-
 END;

@@ -10,7 +10,7 @@ GO
 -- Create date: 11/14/2023
 -- Description:	
 -- =============================================
-ALTER PROCEDURE [Project2].[Load_DimMaritalStatus]
+ALTER PROCEDURE [Project2].[Load_DimGender]
 @GroupMemberUserAuthorizationKey INT
 AS
 BEGIN
@@ -25,36 +25,33 @@ BEGIN
 	DECLARE @DateOfLastUpdate DATETIME2;
     SET @DateOfLastUpdate = SYSDATETIME();
 
-	INSERT INTO [CH01-01-Dimension].[DimMaritalStatus]
+	INSERT INTO [CH01-01-Dimension].[DimGender]
 	(
-		MaritalStatus,
+		Gender,
+		GenderDescription,
 		UserAuthorizationKey,
 		DateAdded,
 		DateOfLastUpdate
 	)
 	SELECT
 		DISTINCT 
-		OLD.MaritalStatus,
+		OLD.Gender,
+		CASE Old.Gender WHEN 'M' THEN 'Male' ELSE 'Female' END AS GenderDescription,
 		@GroupMemberUserAuthorizationKey,
 		@DateAdded,
 		@DateOfLastUpdate
 	FROM FileUpload.OriginallyLoadedData as OLD
-	Order BY MaritalStatus asc
+	Order BY Gender asc
 
 	declare @rowCount as INT;
-	set @rowCount = (SELECT COUNT(*) FROM [CH01-01-Dimension].[DimMaritalStatus]);
+	set @rowCount = (SELECT COUNT(*) FROM [CH01-01-Dimension].[DimGender]);
 	set @startT = SYSDATETIME();
 	set @endT = SYSDATETIME();
 
-	INSERT INTO Process.WorkflowSteps 
-(		UserAuthorizationKey,
-		WorkFlowStepDescription,
-		StartingDateTime,
-		EndingDateTime,
-		WorkFlowStepTableRowCount)
+	INSERT INTO Process.WorkflowSteps (UserAuthorizationKey, WorkFlowStepDescription, StartingDateTime, EndingDateTime, WorkFlowStepTableRowCount)
 	VALUES(
 		@GroupMemberUserAuthorizationKey,
-		N'Marital Status',
+		N'Gender.',
 		@startT,
 		 @endT,
 		@rowCount

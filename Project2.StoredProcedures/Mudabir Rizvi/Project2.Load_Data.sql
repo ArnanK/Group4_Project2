@@ -1,6 +1,6 @@
 USE [BIClass]
 GO
-
+/****** Object:  StoredProcedure [Project2].[Load_Data]    Script Date: 11/15/2023 7:52:42 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,6 +78,11 @@ BEGIN
 		@DateAdded,
 		@DateOfLastUpdate
 	FROM FileUpload.OriginallyLoadedData as old
+	LEFT JOIN [CH01-01-Dimension].SalesManagers as SM on SM.SalesManager=old.SalesManager
+	LEFT JOIN [CH01-01-Dimension].DimOccupation as DO on DO.Occupation=old.Occupation
+	LEFT JOIN [CH01-01-Dimension].DimTerritory as DT on DT.TerritoryCountry=old.TerritoryCountry and DT.TerritoryGroup=old.TerritoryGroup and DT.TerritoryRegion=old.TerritoryRegion
+	LEFT JOIN [CH01-01-Dimension].DimProduct as DP on DP.ProductName=old.ProductName and DP.ProductCode=old.ProductCode
+	LEFT JOIN [CH01-01-Dimension].DimCustomer as DC on DC.CustomerName=old.CustomerName
 	
 
 
@@ -97,4 +102,3 @@ BEGIN
 
 END
 
-go

@@ -35,10 +35,7 @@ BEGIN
 
 	ALTER SEQUENCE [PKSequence].[DataSequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimCustomerSequenceObject] RESTART WITH 1;
-	ALTER SEQUENCE [PKSequence].[DimGenderSequenceObject] RESTART WITH 1;
-	ALTER SEQUENCE [PKSequence].[DimMartialStatusSequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimOccupationSequenceObject] RESTART WITH 1;
-	ALTER SEQUENCE [PKSequence].[DimOrderDateSequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimProductSequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimProductCategorySequenceObject] RESTART WITH 1;
 	ALTER SEQUENCE [PKSequence].[DimProductSubcategorySequenceObject] RESTART WITH 1;
